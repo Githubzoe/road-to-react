@@ -1,6 +1,6 @@
 import logo from './logo.svg';
 import './App.css';
-import React, {useState} from 'react';
+import React from 'react';
 
 function App() {
   const stories = [
@@ -22,10 +22,17 @@ function App() {
     },
   ];
 
-  const [searchTerm, setSearchTerm] = useState('React');
+  const [searchTerm, setSearchTerm] = React.useState(
+    localStorage.getItem('search') || 'React'
+  );
 
+  React.useEffect(()=>{
+    localStorage.setItem('search', searchTerm)
+  }, [searchTerm])
+  
   const handleSearch = event => {
     setSearchTerm(event.target.value);
+    localStorage.setItem('search', event.target.value);
   }
 
   const searchedStories = stories.filter(story => 
